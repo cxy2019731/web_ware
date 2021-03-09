@@ -2,6 +2,7 @@
  * 外部依赖
  * 1.ahooks https://ahooks.gitee.io
  * 2.启用了css module特性
+ * 3.配置了webpack全局挂载特性，如底部getStyle方法,本不存在于当前文件,方便自行组织
  */
 import { useRef, useEffect, useState } from "react";
 import { Table } from "antd";
@@ -192,3 +193,19 @@ function getStyleFullHeight(domRef) {
   }
   return h;
 }
+
+/**
+ * 获取指定dom节点的指定css属性
+ * @param {element} elem dom节点
+ * @param {string} prop 属性名
+ * @returns number | string
+ */
+function getStyle(elem,prop){
+  if(window.getComputedStyle){
+    return window.getComputedStyle(elem,null)[prop];
+  }else{
+    return elem.currentStyle[prop];
+  }
+}
+  
+  
