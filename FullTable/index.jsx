@@ -2,9 +2,9 @@
  * 外部依赖
  * 1.ahooks https://ahooks.gitee.io
  * 2.启用了css module特性
- * 3.配置了webpack全局挂载特性，如底部getStyle方法,本不存在于当前文件,方便自行组织
+ * 3.配置了webpack全局常量特性utils，如底部getStyle方法，为方便放入底部，根据个人想法自由组织
  */
-import { useRef, useEffect, useState } from "react";
+import { memo, useRef, useMemo } from "react";
 import { Table } from "antd";
 import { useSize } from "ahooks";
 import styles from "./styles.module.css";
@@ -16,11 +16,12 @@ import styles from "./styles.module.css";
  * 3.headerStyle object 顶部内容自定义样式区域
  * @returns antd Table
  */
-export default function FullTable(props) {
+const FullTable = memo((props) => {
   const {
     header = null,
     headerStyle = {},
 
+    dataSource = [],
     pagination = {},
     bordered = false,
     columns = [],
@@ -31,8 +32,6 @@ export default function FullTable(props) {
     scroll = {},
     ...tableProps
   } = props;
-
-  const [scrollPoint, setScrollPoint] = useState({ x: 0, y: 0 });
 
   const tableBoxRef = useRef();
   const tableHeaderRef = useRef();
@@ -90,47 +89,49 @@ export default function FullTable(props) {
     }
   };
 
-  useEffect(() => {
+  const scrollProps = useMemo(() => {
+    let nowScroll = {
+      scrollToFirstRowOnChange: true,
+      ...scroll,
+      x: 0,
+      y: 0,
+    };
     if (tableBoxRef?.current) {
-      setScrollPoint({
-        x: getScrollWidth() || 0,
-        y: getScrollHeight() || 0,
-      });
+      nowScroll.x = getScrollWidth() || 0;
+      nowScroll.y = getScrollHeight() || 0;
     }
+    return nowScroll;
   }, [
     tableHeaderSize,
     tableBoxSize,
     bordered,
-    columns,
     footer,
     size,
     title,
     showHeader,
+    scroll,
   ]);
 
-  const paginationProps = {
-    total: pagination?.total || tableProps?.dataSource?.length,
-    showQuickJumper: true,
-    showSizeChanger: true,
-    position: ["bottomCenter"],
-    showTotal: (total, range) => {
-      return (
-        <span className={styles.custom_total}>
-          共&nbsp;<b className={styles.custom_total_nums}>{total}</b>
-          &nbsp;条数据 当前显示第 &nbsp;
-          <b className={styles.custom_total_start}>{range[0]}</b>&nbsp;至&nbsp;
-          <b className={styles.custom_total_end}>{range[1]}</b>&nbsp;条
-        </span>
-      );
-    },
-    ...pagination,
-  };
-
-  const scrollProps = {
-    scrollToFirstRowOnChange: true,
-    ...scrollPoint,
-    ...scroll,
-  };
+  const paginationProps = useMemo(() => {
+    return {
+      total: pagination?.total || dataSource?.length,
+      showQuickJumper: true,
+      showSizeChanger: true,
+      position: ["bottomCenter"],
+      showTotal: (total, range) => {
+        return (
+          <span className={styles.custom_total}>
+            共&nbsp;<b className={styles.custom_total_nums}>{total}</b>
+            &nbsp;条数据 当前显示第 &nbsp;
+            <b className={styles.custom_total_start}>{range[0]}</b>
+            &nbsp;至&nbsp;
+            <b className={styles.custom_total_end}>{range[1]}</b>&nbsp;条
+          </span>
+        );
+      },
+      ...pagination,
+    };
+  }, [pagination, dataSource]);
 
   return (
     <div className={styles.table_box} ref={tableBoxRef}>
@@ -147,6 +148,7 @@ export default function FullTable(props) {
         <Table
           rowKey={(row) => row?.id || row?.key || row?.value}
           {...tableProps}
+          dataSource={dataSource}
           bordered={bordered}
           columns={columns}
           footer={footer}
@@ -159,7 +161,7 @@ export default function FullTable(props) {
       </div>
     </div>
   );
-}
+});
 
 /**
  * 获取当前dom的影响布局的高度，包括height/padding/border/margin
@@ -193,6 +195,8 @@ function getStyleFullHeight(domRef) {
   }
   return h;
 }
+export default FullTable;
+
 
 /**
  * 获取指定dom节点的指定css属性
