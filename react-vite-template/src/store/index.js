@@ -6,8 +6,8 @@
  * @LastEditTime: 2021-04-08 15:28:58
  * @FilePath: \react-vite2-template\src\store\index.js
  */
-import { default as $$global } from "./global/index";
+import global from './global/index';
 
 export default {
-  $$global,
+	...global,
 };

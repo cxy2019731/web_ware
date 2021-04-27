@@ -7,44 +7,46 @@
  * @FilePath: \react-vite2-template\src\router\index.jsx
  */
 
-import { HashRouter, Route, Switch, Redirect } from "react-router-dom";
-/**
- * ********************************************************公共组件**********************************************************************************
- */
-import App from "@/App";
-import Layout from "@/layout/index";
-import NotFound from "@/pages/404";
-/**
- * ********************************************************页面导入**********************************************************************************
- */
-import Home from "@/pages/Home";
-import About from "@/pages/About";
-import Login from "@/pages/Login";
-/**
- * ********************************************************路由组件**********************************************************************************
- */
+import { HashRouter, Switch, Redirect } from 'react-router-dom';
+import AuthorizedRoute from './AuthorizedRoute';
+import routes from './routes';
+import App from '@/App';
+
+function renderRoutes(list) {
+	return list.map((rc) => {
+		const { path, component: Component, authority, redirectPath, routes, ...rest } = rc;
+		const prop = {
+			key: path,
+			path,
+			authority,
+			redirectPath,
+			...rest,
+		};
+		if (routes && routes.length) {
+			return (
+				<AuthorizedRoute
+					{...prop}
+					render={(props) => (
+						<Component>
+							<Switch>
+								{renderRoutes(routes)}
+								<Redirect to='/notFound' />
+							</Switch>
+						</Component>
+					)}
+				/>
+			);
+		}
+		return <AuthorizedRoute {...prop} component={Component} />;
+	});
+}
+
 export default () => (
-  <HashRouter basename="/">
-    <Switch>
-      <App>
-        <Switch>
-          <Route
-            path="/"
-            render={() => (
-              <Layout>
-                <Switch>
-                  <Route exact path="/home" component={Home} />
-                  <Route exact path="/about" component={About} />
-                  <Redirect to="/home" />
-                </Switch>
-              </Layout>
-            )}
-          />
-          <Route exact path="/login" component={Login} />
-          <Route exact path="/notFound" component={NotFound} />
-          <Redirect to="/notFound" />
-        </Switch>
-      </App>
-    </Switch>
-  </HashRouter>
+	<HashRouter basename='/'>
+		<Switch>
+			<App>
+				<Switch>{renderRoutes(routes)}</Switch>
+			</App>
+		</Switch>
+	</HashRouter>
 );
