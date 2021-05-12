@@ -6,8 +6,11 @@
  * @LastEditTime: 2021-04-08 15:34:04
  * @FilePath: \react-vite2-template\src\configs\_service.js
  */
-const development = {};
-const production = {};
+// import {}=import.meta.env;
+const config = {
+	development: {},
+	production: {},
+};
 
-export default development;
+export default config[env.MODE];
 // export default production;
