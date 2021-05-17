@@ -7,7 +7,10 @@
  * @FilePath: \react-vite2-template\src\store\global\state.js
  */
 const state = {
-  version: `0.0.01`,
+	// 版本
+	version: `0.0.01`,
+	// 路由对象
+	location: {},
 };
 
 export default state;

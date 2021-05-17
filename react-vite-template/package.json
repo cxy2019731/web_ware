@@ -13,6 +13,7 @@
     "classnames": "^2.3.1",
     "concent": "^2.14.25",
     "cxy-react-i18n": "^1.30.28",
+    "perfect-scrollbar": "^1.5.1",
     "qs": "^6.10.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",

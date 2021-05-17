@@ -26,7 +26,7 @@ function FontIcon({ name = null, style = {}, color, size, stroke }) {
 			stroke,
 		};
 	}, [style, color, size, stroke]);
-
+	
 	return <>{name ? <Icon {...__props} /> : null}</>;
 }
 

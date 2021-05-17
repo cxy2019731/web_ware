@@ -1,0 +1,32 @@
+#customMenusClassBox {
+	height: 100%;
+	overflow-y: auto;
+	overflow-x: hidden;
+	position: relative;
+	&::-webkit-scrollbar {
+		width: 6px;
+		height: 0;
+	}
+	&::-webkit-scrollbar-thumb {
+		background-color: rgba(50, 50, 50, 0.1);
+		border-radius: 4px;
+	}
+	&::-webkit-scrollbar-track {
+		background-color: rgba(50, 50, 50, 0);
+		border-radius: 4px;
+	}
+	&:hover {
+		&::-webkit-scrollbar-thumb {
+			background-color: rgba(50, 50, 50, 0.35);
+		}
+	}
+	.ant-menu-item {
+		margin: 0 0 !important;
+	}
+	.ant-menu-item-active {
+		background-color: #e6f7ff;
+	}
+	.ant-menu-inline {
+		background: rgba(0, 0, 0, 0.05) !important;
+	}
+}

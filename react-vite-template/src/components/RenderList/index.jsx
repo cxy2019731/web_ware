@@ -45,9 +45,15 @@ function RenderList(props) {
 		}
 
 		return data.map((item, index) => (
-			<div className={classItem} style={styleItem} onClick={onClickItem} key={__render_key(item, index)}>
+			<ul
+				style={{
+					position: 'relative',
+					...styleItem,
+				}}
+				onClick={onClickItem}
+				key={__render_key(item, index)}>
 				{__render_item(item, index)}
-			</div>
+			</ul>
 		));
 	};
 

@@ -6,7 +6,6 @@
  * @LastEditTime: 2021-04-08 14:02:09
  * @FilePath: \react-vite2-template\src\router\index.jsx
  */
-
 import { HashRouter, Switch, Redirect } from 'react-router-dom';
 import AuthorizedRoute from './AuthorizedRoute';
 import routes from './routes';
@@ -41,12 +40,14 @@ function renderRoutes(list) {
 	});
 }
 
-export default () => (
-	<HashRouter basename='/'>
-		<Switch>
-			<App>
-				<Switch>{renderRoutes(routes)}</Switch>
-			</App>
-		</Switch>
-	</HashRouter>
-);
+export default () => {
+	return (
+		<HashRouter basename='/'>
+			<Switch>
+				<App>
+					<Switch>{renderRoutes(routes)}</Switch>
+				</App>
+			</Switch>
+		</HashRouter>
+	);
+};

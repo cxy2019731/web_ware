@@ -5,9 +5,9 @@ const createViteCss = () => {
 		postcss: {
 			plugins: [
 				require('postcss-pxtorem')({
-					rootValue: 32,
+					rootValue: 16,
 					propList: ['*'],
-					unitPrecision: 5,
+					unitPrecision: 1,
 					exclude: /(node_module)/,
 				}),
 			],

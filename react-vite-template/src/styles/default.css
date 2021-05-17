@@ -3,8 +3,6 @@
 	--headerBgColor: #018ffb;
 	/* layout sider */
 	--siderBgColor: #304156;
-	--siderOpenWidth: 210px;
-	--siderShutWidth: 80px;
 	/* 默认 */
 	--baseBgColor: #f0f2f5;
 	/* 字体 */
@@ -21,7 +19,6 @@
 }
 
 * {
-	font-size: var(--baseFontSize);
 	color: var(--baseFontColor);
 }
 

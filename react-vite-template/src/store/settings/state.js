@@ -7,16 +7,19 @@
  * @FilePath: \react-vite2-template\src\store\global\state.js
  */
 const state = {
-	// 菜单配置
+	// ---------------------------------------------菜单配置
 	openKeys: [],
-  selectedKeys:[],
+	selectedKeys: [],
 	// expandIcon:,
 	// overflowedIndicator:,
 	inlineIndent: 25,
 	inlineCollapsed: true,
-	mode: 'vertical', //vertical | inline | horizontal
+	inlineCollapsedOpenWidth: 210,
+	inlineCollapsedShutWidth: 80,
+	mode: 'inline', //inline | horizontal | vertical
 	multiple: false,
 	selectable: true,
+	bgColor:'#95a5a6'
 };
 
 export default state;

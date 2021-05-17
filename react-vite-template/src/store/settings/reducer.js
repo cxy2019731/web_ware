@@ -9,3 +9,6 @@
 export function openKeysChange(openKeys) {
 	return { openKeys };
 }
+export function onSelectedKeysChange(selectedKeys) {
+	return { selectedKeys };
+}
