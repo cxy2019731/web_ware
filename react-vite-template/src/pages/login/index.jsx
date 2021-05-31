@@ -6,7 +6,7 @@ import { UserOutlined, LockOutlined, QuestionCircleOutlined, UserAddOutlined } f
 import css from './login.module.less';
 import WavesBall from '@components/WavesBall/index';
 import Language from '@components/Language/index';
-import { useI18nKeyToText } from 'cxy-react-i18n';
+import { useI18nKeyToText, MODEL_NAME } from 'cxy-react-i18n';
 
 const layout = {
 	wrapperCol: { span: 24 },
@@ -34,9 +34,12 @@ function setup(ctx) {
 function LoginView() {
 	const [form] = Form.useForm();
 
-	const ctx = useConcent({ module: _USER, connect: [_GLOBAL], setup });
+	const ctx = useConcent({ module: _USER, connect: [_GLOBAL, MODEL_NAME], setup });
 
 	const { state, moduleState: ms, settings: st, globalState: gs } = ctx;
+
+	console.log(ctx.connectedState[MODEL_NAME])
+	console.log(ctx.connectedComputed[MODEL_NAME]);
 
 	useKeyPress('enter', form.submit);
 	// 国际化
