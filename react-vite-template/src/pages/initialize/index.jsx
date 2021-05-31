@@ -27,7 +27,7 @@ function setup(ctx) {
 
 export default (props) => {
 	const navigate = useNavigate();
-	const { state, settings: st, moduleState: ms, mr } = useConcent({ module: _USER, setup });
+	const { state, settings: st, mr } = useConcent({ module: _USER, setup });
 	// 用户数据初始化
 	useInterval(st.changeUserCount, state.userTime);
 
@@ -50,7 +50,7 @@ export default (props) => {
 	return (
 		<div className={css.initialize}>
 			<div className={css.percentage}>
-				<span className={css.text}>初始化中...</span>
+				<span className={css.text}>{fr('global.loading.text')}</span>
 				<div className={css.status}>
 					<div className={css.charging}></div>
 					<span className={css.progress}>

@@ -28,7 +28,7 @@ export default ({ command, mode }) => {
 		base: '/',
 		root: process.cwd(),
 		esbuild: {
-			jsxInject: `import React from 'react';import useConcent from '@useConcent';`,
+			jsxInject: `import React from 'react';import useConcent from '@useConcent';import fr from '@fr';`,
 		},
 		resolve: {
 			alias: createViteAlias(),

@@ -35,3 +35,7 @@ export function isTokenEffective() {
 	}
 	return false;
 }
+// 延时器-promise
+export function delay(ms = 1000) {
+	return new Promise((res, rej) => setTimeout(() => res(true), ms));
+}

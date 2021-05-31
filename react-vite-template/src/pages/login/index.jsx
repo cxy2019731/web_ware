@@ -1,72 +1,118 @@
-import { _INITIALIZE, _USER } from '@constant';
-import { useNavigate } from 'react-router-dom';
-import { removeToken } from '@utils';
+import { _USER, _GLOBAL } from '@constant';
+import { Link } from 'react-router-dom';
 import { useKeyPress } from 'ahooks';
+import { Form, Input, Button, Checkbox, Row, Col } from 'antd';
+import { UserOutlined, LockOutlined, QuestionCircleOutlined, UserAddOutlined } from '@ant-design/icons';
+import css from './login.module.less';
 import WavesBall from '@components/WavesBall/index';
+import Language from '@components/Language/index';
+import { useI18nKeyToText } from 'cxy-react-i18n';
+
+const layout = {
+	wrapperCol: { span: 24 },
+};
+
 function setup(ctx) {
 	ctx.initState({
-		username: '',
-		password: '',
 		loading: false,
 	});
 
 	const st = {
-		usernameChange: ctx.sync('username'),
-		passwordChange: ctx.sync('password'),
 		loadingChange: ctx.syncBool('loading'),
-		reset: () => ctx.setState({ username: '', password: '' }),
+		// 提交表单验证失败
+		onFinishFailed: (errorInfo) => {},
+		// 提交表单验证成功
+		onFinish: (values) => {
+			st.loadingChange();
+			ctx.mr.login(values);
+		},
 	};
 
 	return st;
 }
 
 function LoginView() {
-	const navigate = useNavigate();
+	const [form] = Form.useForm();
 
-	const { state, moduleState: ms, settings: st, mr } = useConcent({ module: _USER, setup });
+	const ctx = useConcent({ module: _USER, connect: [_GLOBAL], setup });
 
-	const submit = async () => {
-		st.loadingChange();
-		mr.login({ username: state.username, password: state.password });
-	};
-	useKeyPress('enter', submit);
+	const { state, moduleState: ms, settings: st, globalState: gs } = ctx;
 
-	React.useEffect(() => {
-		if (ms.isLogin) {
-			navigate(_INITIALIZE);
-		} else {
-			removeToken();
-		}
-	}, []);
+	useKeyPress('enter', form.submit);
+	// 国际化
+	const username_placeholder = useI18nKeyToText('login.username.placeholder');
+	const password_placeholder = useI18nKeyToText('login.password.placeholder');
 
 	return (
 		<>
-			<div>
-				<label>
-					账户：
-					<input value={state.username} onChange={st.usernameChange} disabled={state.loading} placeholder='用户名' />
-				</label>
+			<Row className={css.login_box}>
+				<Col xs={20} sm={14} md={12} lg={10} xl={8} xxl={6}>
+					<div className={css.title}>{gs.title}</div>
+					<div className={css.formBox}>
+						{/* 边框 */}
+						<span></span>
+						<span></span>
+						<span></span>
+						<span></span>
+						<Form
+							{...layout}
+							name='loginForm'
+							form={form}
+							initialValues={{ remember: false }}
+							onFinish={st.onFinish}
+							onFinishFailed={st.onFinishFailed}>
+							<Form.Item name='username' rules={[{ required: true, message: fr('login.username.required.message') }]}>
+								<Input
+									prefix={<UserOutlined style={{ color: '#1890ff' }} />}
+									placeholder={username_placeholder}
+									disabled={state.loading}
+								/>
+							</Form.Item>
+							<Form.Item name='password' rules={[{ required: true, message: fr('login.password.required.message') }]}>
+								<Input
+									prefix={<LockOutlined style={{ color: '#1890ff' }} />}
+									type='password'
+									placeholder={password_placeholder}
+									disabled={state.loading}
+								/>
+							</Form.Item>
+							<Form.Item name='remember' valuePropName='checked'>
+								<Checkbox>{fr('login.remember.label')}</Checkbox>
+							</Form.Item>
+
+							<Form.Item>
+								<Button loading={state.loading} type='primary' htmlType='submit' block>
+									{fr(
+										ms.isLogin
+											? 'login.submit.text.success'
+											: state.loading
+											? 'login.submit.text.loading'
+											: 'login.submit.text',
+									)}
+								</Button>
+							</Form.Item>
+							<div className={css.flexsb}>
+								<Link to='/'>
+									<QuestionCircleOutlined style={{ marginRight: 5 }} />
+									{fr('login.password.forget.text')}
+								</Link>
+								<Link to='/'>
+									<UserAddOutlined style={{ marginRight: 5 }} />
+									{fr('login.username.forget.text')}
+								</Link>
+							</div>
+						</Form>
+					</div>
+				</Col>
+			</Row>
+			{/* 语言切换 */}
+			<div className={css.languageCom}>
+				<Language />
 			</div>
-			<div>
-				<label>
-					密码：
-					<input value={state.password} onChange={st.passwordChange} disabled={state.loading} placeholder='密码：' />
-				</label>
-			</div>
-			<div>
-				<button onClick={submit} disabled={state.loading}>
-					登录
-				</button>
-				<button onClick={st.reset} disabled={state.loading}>
-					重置
-				</button>
-				{state.loading ? 'loading...' : null}
-			</div>
+			{/* 背景 */}
 			<WavesBall />
 		</>
 	);
 }
 
 export default LoginView;
-
-

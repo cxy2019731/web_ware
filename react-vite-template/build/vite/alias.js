@@ -17,7 +17,9 @@ const createViteAlias = () => {
 		// concent 获取全部模块状态state
 		{ find: '@getAllModuleState', replacement: '/src/base/cc_state.js' },
 		// 组件导出
-		{ find: '@components', replacement: '/src/components' }
+		{ find: '@components', replacement: '/src/components' },
+		// 国际化函数
+		{ find: '@fr', replacement: '/src/base/i18n_fr.js' }
 	];
 
 	return config;

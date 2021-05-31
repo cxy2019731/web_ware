@@ -1,5 +1,10 @@
+import WaveaWater from '@components/WaveaWater/index';
 function HomeView(props) {
-	return <>HomeView</>;
+	return (
+		<>
+			<WaveaWater />
+		</>
+	);
 }
 
 export default HomeView;

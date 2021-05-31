@@ -677,10 +677,10 @@ cosmiconfig@^7.0.0:
     path-type "^4.0.0"
     yaml "^1.10.0"
 
-cxy-react-i18n@^1.30.32:
-  version "1.30.32"
-  resolved "https://registry.yarnpkg.com/cxy-react-i18n/-/cxy-react-i18n-1.30.32.tgz#a3370855d75fcede3e32b6d11bb4abcced2e4a54"
-  integrity sha512-TUaNo/v3di21gJw+Uojh6fnRwKkGyPZRZcCfOomwxczfKDg3XM5pxinD9RjjjmpTEfUVV0wHTTaLZ/X4JWhv8w==
+cxy-react-i18n@^1.30.35:
+  version "1.30.35"
+  resolved "https://registry.yarnpkg.com/cxy-react-i18n/-/cxy-react-i18n-1.30.35.tgz#f889895a116ae59ef75f745242a55d492a120ae3"
+  integrity sha512-iezRTpOUSxfcgcvU4CNW5aVoPkhtPhJzi1Zfu/EKvkjjow/oE/bAWKkRwr7inXe2MsIlz2vX9ii3oybOd89TrQ==
   dependencies:
     concent "^2.15.3"
 
@@ -1768,6 +1768,11 @@ sourcemap-codec@^1.4.4:
   resolved "https://registry.yarnpkg.com/sourcemap-codec/-/sourcemap-codec-1.4.8.tgz#ea804bd94857402e6992d05a38ef1ae35a9ab4c4"
   integrity sha512-9NykojV5Uih4lgo5So5dtw+f0JgJX30KCNI8gwhz2J9A15wD0Ml6tjHKwf6fTSa6fAdVBdZeNOs9eJ71qCk8vA==
 
+store@^2.0.12:
+  version "2.0.12"
+  resolved "https://registry.yarnpkg.com/store/-/store-2.0.12.tgz#8c534e2a0b831f72b75fc5f1119857c44ef5d593"
+  integrity sha1-jFNOKguDH3K3X8XxEZhXxE711ZM=
+
 string-convert@^0.2.0:
   version "0.2.1"
   resolved "https://registry.yarnpkg.com/string-convert/-/string-convert-0.2.1.tgz#6982cc3049fbb4cd85f8b24568b9d9bf39eeff97"
@@ -1789,11 +1794,6 @@ systemjs@^6.8.3:
   version "6.8.3"
   resolved "https://registry.yarnpkg.com/systemjs/-/systemjs-6.8.3.tgz#67e27f49242e9d81c2b652b204ae54e8bfcc75a3"
   integrity sha512-UcTY+FEA1B7e+bpJk1TI+a9Na6LG7wFEqW7ED16cLqLuQfI/9Ri0rsXm3tKlIgNoHyLHZycjdAOijzNbzelgwA==
-
-three@^0.128.0:
-  version "0.128.0"
-  resolved "https://registry.yarnpkg.com/three/-/three-0.128.0.tgz#884dacca6a330e45600a09ec5439283f50b76aa6"
-  integrity sha512-i0ap/E+OaSfzw7bD1TtYnPo3VEplkl70WX5fZqZnfZsE3k3aSFudqrrC9ldFZfYFkn1zwDmBcdGfiIm/hnbyZA==
 
 to-fast-properties@^2.0.0:
   version "2.0.0"

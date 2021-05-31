@@ -7,10 +7,11 @@
  * @FilePath: \react-vite2-template\src\store\global\state.js
  */
 const state = {
+	title: `VITE WEB SITE`,
 	// 版本
 	version: `0.0.01`,
 	// 路由菜单-根据用户获取下来的
-	menus:[]
+	menus: [],
 };
 
 export default state;

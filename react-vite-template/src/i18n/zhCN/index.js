@@ -6,4 +6,10 @@
  * @LastEditTime: 2021-04-08 15:35:03
  * @FilePath: \react-vite2-template\src\i18n\zhCN\index.js
  */
-export default {};
+import login from './login';
+export default {
+	...login,
+	'global.language.zhCN': '简体中文',
+	'global.language.enUS': 'English',
+	'global.loading.text': '加载中',
+};

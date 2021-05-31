@@ -24,7 +24,7 @@ export async function getUserInfo() {
 	await new Promise((res, rej) => {
 		setTimeout(() => {
 			res(true);
-		}, 3000);
+		}, 1000);
 	});
 	return {
 		info: { ...getToken(true) },

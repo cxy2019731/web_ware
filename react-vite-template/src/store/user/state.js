@@ -1,11 +1,10 @@
 /*
  * @Author: itmanyong
- * @Date: 2021-04-08 15:23:07
- * @LastEditors: itmanyong
- * @Description: now file Description
- * @LastEditTime: 2021-04-08 15:31:10
- * @FilePath: \react-vite2-template\src\store\global\state.js
+ * @Date: 2021-05-31 11:40:34
+ * @Last Modified by:   itmanyong
+ * @Last Modified time: 2021-05-31 11:40:34
  */
+
 const state = {
 	// 登录与否
 	isLogin: false,
