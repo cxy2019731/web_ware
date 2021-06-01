@@ -38,9 +38,6 @@ function LoginView() {
 
 	const { state, moduleState: ms, settings: st, globalState: gs } = ctx;
 
-	console.log(ctx.connectedState[MODEL_NAME])
-	console.log(ctx.connectedComputed[MODEL_NAME]);
-
 	useKeyPress('enter', form.submit);
 	// 国际化
 	const username_placeholder = useI18nKeyToText('login.username.placeholder');

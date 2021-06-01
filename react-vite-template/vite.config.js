@@ -6,7 +6,6 @@
  * @LastEditTime: 2021-04-08 15:39:21
  * @FilePath: \react-vite2-template\vite.config.js
  */
-import vite from 'vite';
 // https://vitejs.dev/config/
 import { createViteAlias } from './build/vite/alias';
 import { createVitePlugins } from './build/vite';
@@ -35,7 +34,7 @@ export default ({ command, mode }) => {
 		},
 		server: createViteServer(),
 		css: createViteCss(),
-		plugins: createVitePlugins(isService, isBuild),
+		plugins: createVitePlugins(isService, isBuild,isProd,isDev),
 	};
 	if (isBuild) {
 		config.build = createViteBuild();

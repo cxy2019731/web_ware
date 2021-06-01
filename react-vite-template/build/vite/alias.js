@@ -5,7 +5,7 @@ const createViteAlias = () => {
 		// 请求封装
 		{ find: '@request', replacement: '/src/service/request.js' },
 		// 接口封装-文件夹
-		{ find: '@http', replacement: '/src/service/http' },
+		{ find: '@http', replacement: '/src/service/apis.js' },
 		// 方法封装
 		{ find: '@utils', replacement: '/src/utils/index.js' },
 		// 全局常量

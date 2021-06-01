@@ -7,17 +7,15 @@
  * @FilePath: \react-vite2-template\src\store\global\state.js
  */
 import { setToken, getToken } from '@utils';
+import { httpLogin } from '@http';
 // 登录
 export async function login({ username, password }) {
-	await new Promise((res, rej) => {
-		setTimeout(() => {
-			res(true);
-		}, 1500);
-	});
-	setToken({ username, password });
-	return {
-		isLogin: true,
-	};
+	const res =await httpLogin({ username, password });
+	console.log(res)
+	// setToken({ username, password });
+	// return {
+	// 	isLogin: true,
+	// };
 }
 // 获取用户信息
 export async function getUserInfo() {

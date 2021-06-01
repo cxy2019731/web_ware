@@ -1,10 +1,15 @@
-import WaveaWater from '@components/WaveaWater/index';
+import css from './index.module.less';
+
+function setup(ctx) {
+	const { setState } = ctx;
+	ctx.initState({});
+	const st = {};
+	return st;
+}
+
 function HomeView(props) {
-	return (
-		<>
-			<WaveaWater />
-		</>
-	);
+	const ctx = useConcent({ setup });
+	return <div className={css.box}></div>;
 }
 
 export default HomeView;
