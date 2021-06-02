@@ -8,18 +8,26 @@
  */
 import request from '@request';
 import { PROFIX_USER } from '@/service/prefix';
+import cr from '@/base/cc_reducer';
+import { _USER } from '@constant';
 /**
  * 接口
  */
 export const USER_LOGIN = `${PROFIX_USER}login`;
 
 /**
- * 方法
+ * 登录
  */
-export function httpLogin({ userName, password }) {
-	return request({
+export async function httpLogin({ userName, passWord }) {
+	const { code, data } = await request({
 		url: USER_LOGIN,
 		method: `POST`,
-		data: { userName, password },
+		data: { userName, passWord },
 	});
+	if (!code) {
+		cr[_USER].login(data);
+		return true;
+	} else {
+		return false;
+	}
 }

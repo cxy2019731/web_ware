@@ -6,40 +6,30 @@ import css from './index.module.less';
 function setup(ctx) {
 	ctx.initState({
 		progress: 0,
-		// 用户数据
-		userTime: null,
-		userCount: 101,
+		targetProgress: 0,
 	});
 
 	const st = {
 		changeProgress: () => ctx.setState({ progress: ctx.state.progress + 1 }),
-		changeUserTime: () => ctx.setState({ userTime: ctx.state.userCount - 1 > 0 ? 50 : null }),
-		changeUserCount: () => {
-			ctx.setState({
-				userCount: ctx.state.userCount - 1,
-			});
-			st.changeUserTime();
-			st.changeProgress();
-		},
+		changeUserCount: (targetProgress) => ctx.setState({ targetProgress }),
 	};
+
 	return st;
 }
 
 export default (props) => {
 	const navigate = useNavigate();
-	const { state, settings: st, mr } = useConcent({ module: _USER, setup });
-	// 用户数据初始化
-	useInterval(st.changeUserCount, state.userTime);
 
+	const { state, settings: st } = useConcent({ module: _USER, setup });
+	
+	useInterval(st.changeProgress, state.progress < state.targetProgress ? 20 : null);
+	// 用户登录完成
 	React.useEffect(() => {
-		if (state.initStatus) {
-			st.changeUserTime();
+		if (state.isLogin) {
+			st.changeUserCount(100);
 		}
-	}, [state.initStatus]);
+	}, [state.isLogin]);
 
-	React.useEffect(() => {
-		mr.getUserInfo();
-	}, []);
 	// 加载完成跳转
 	React.useEffect(() => {
 		if (state.progress >= 100) {

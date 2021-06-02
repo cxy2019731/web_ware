@@ -3,10 +3,11 @@ import { Link } from 'react-router-dom';
 import { useKeyPress } from 'ahooks';
 import { Form, Input, Button, Checkbox, Row, Col } from 'antd';
 import { UserOutlined, LockOutlined, QuestionCircleOutlined, UserAddOutlined } from '@ant-design/icons';
-import css from './login.module.less';
+import { useI18nKeyToText, MODEL_NAME } from 'cxy-react-i18n';
+import { httpLogin } from '@http/user';
 import WavesBall from '@components/WavesBall/index';
 import Language from '@components/Language/index';
-import { useI18nKeyToText, MODEL_NAME } from 'cxy-react-i18n';
+import css from './login.module.less';
 
 const layout = {
 	wrapperCol: { span: 24 },
@@ -19,12 +20,11 @@ function setup(ctx) {
 
 	const st = {
 		loadingChange: ctx.syncBool('loading'),
-		// 提交表单验证失败
-		onFinishFailed: (errorInfo) => {},
 		// 提交表单验证成功
-		onFinish: (values) => {
+		onFinish: async (values) => {
 			st.loadingChange();
-			ctx.mr.login(values);
+			await httpLogin(values);
+			st.loadingChange();
 		},
 	};
 
@@ -54,21 +54,15 @@ function LoginView() {
 						<span></span>
 						<span></span>
 						<span></span>
-						<Form
-							{...layout}
-							name='loginForm'
-							form={form}
-							initialValues={{ remember: false }}
-							onFinish={st.onFinish}
-							onFinishFailed={st.onFinishFailed}>
-							<Form.Item name='username' rules={[{ required: true, message: fr('login.username.required.message') }]}>
+						<Form {...layout} name='loginForm' form={form} initialValues={{ remember: false }} onFinish={st.onFinish}>
+							<Form.Item name='userName' rules={[{ required: true, message: fr('login.username.required.message') }]}>
 								<Input
 									prefix={<UserOutlined style={{ color: '#1890ff' }} />}
 									placeholder={username_placeholder}
 									disabled={state.loading}
 								/>
 							</Form.Item>
-							<Form.Item name='password' rules={[{ required: true, message: fr('login.password.required.message') }]}>
+							<Form.Item name='passWord' rules={[{ required: true, message: fr('login.password.required.message') }]}>
 								<Input
 									prefix={<LockOutlined style={{ color: '#1890ff' }} />}
 									type='password'

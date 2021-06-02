@@ -1,6 +1,5 @@
 import { _USER, _INITIALIZE, _LOGIN } from '@constant';
 import { useNavigate } from 'react-router-dom';
-import { removeToken } from '@utils';
 
 export default (props) => {
 	const navigate = useNavigate();
@@ -11,7 +10,6 @@ export default (props) => {
 		if (ms.isLogin) {
 			navigate(_INITIALIZE);
 		} else {
-			removeToken();
 			navigate(_LOGIN);
 		}
 	}, [ms.isLogin]);

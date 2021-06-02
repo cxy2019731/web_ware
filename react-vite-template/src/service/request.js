@@ -9,10 +9,13 @@
 import axios from 'axios';
 import qs from 'qs';
 import { message } from 'antd';
+import { isTokenEffective, getToken } from '@utils';
+import mr from '@/base/cc_reducer';
+import { _USER, _TOKEN } from '@constant';
 /**
  * URL白名单,无需携带TOKEN-一般后端会做处理,这里配置主要是防止请求拦截中检测TOKEN
  */
-const whiteUrls = [];
+const whiteUrls = ['/user/login'];
 /**
  * 状态码提示设置
  */
@@ -61,9 +64,12 @@ instance.interceptors.request.use(
 		// 1.识别白名单
 		if (!whiteUrls.some((url) => config.url.indexOf(url) != -1)) {
 			// 添加TOKEN-没有TOKEN去登陆
+			if (!isTokenEffective()) {
+				mr[_USER].reset();
+			}
+			config.headers[_TOKEN] = getToken();
 		}
 		// 2.加密
-		console.log(config);
 		return config;
 	},
 	(error) => {
@@ -73,9 +79,13 @@ instance.interceptors.request.use(
 
 instance.interceptors.response.use(
 	(response) => {
+		const { data } = response;
 		// 1.解密
 		// 2.返回
-		return Promise.resolve(response.data);
+		if (data.code && data.message) {
+			message.error(data.message);
+		}
+		return Promise.resolve(data);
 	},
 	(error) => {
 		const { response } = error;
@@ -88,17 +98,13 @@ instance.interceptors.response.use(
 		switch (response.status) {
 			case 401:
 				// 跳去登录/授权
+				mr[_USER].reset();
 				break;
 		}
 		return Promise.reject(errorText);
 	},
 );
 
-const renderObj = {
-	code: 0,
-	data: null,
-	msg: '',
-};
 /**
  * 请求函数
  * @param {object} options 请求参数
@@ -130,19 +136,14 @@ function request(options) {
 		instance
 			.request({ ...params, ...configProps })
 			.then((result) => {
-				resolve({
-					...renderObj,
-					code: 1,
-					data: result,
-					msg: 'OK',
-				});
+				resolve(result);
 			})
 			.catch((error) => {
 				// 进行提示
 				message.error(error || '请求失败,请稍候再试');
 				resolve({
-					...renderObj,
-					msg: JSON.stringify(error),
+					code: 1,
+					message: JSON.stringify(error),
 				});
 			});
 	});

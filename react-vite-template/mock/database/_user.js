@@ -1,11 +1,12 @@
-import { generateArr,renderSuccess,renderError } from '../_utils';
+import { generateArr, renderSuccess, renderError } from '../_utils';
 
 const tableName = `user`;
 
 const tableData = [
 	{
+		id:'66666666666666666',
 		userName: `admin`,
-		passWord: `admin123`,
+		passWord: `admin`,
 		userNick: `超管`,
 		roles: ['superAdministrator'],
 		auths: [],
@@ -14,35 +15,19 @@ const tableData = [
 		enable: true,
 		department: '',
 	},
-	...generateArr(15, {
-		userName: `@string(6,18)`,
-		passWord: `@string(6,18)`,
-		userNick: `@cname(2,6)`,
-		enable: false,
-		department: '',
-		auths: [],
-		email: '@email',
-		'roles|1-2': ['ordinary', 'test'],
-		'note|0-50': '@word',
-	}),
 ];
-
+// generateArr(15, {
+// 	userName: `@string(6,18)`,
+// 	passWord: `@string(6,18)`,
+// 	userNick: `@cname(2,6)`,
+// 	enable: false,
+// 	department: '',
+// 	auths: [],
+// 	email: '@email',
+// 	'roles|1-2': ['ordinary', 'test'],
+// 	'note|0-50': '@word',
+// })
 export default [
-	// 获取
-	{
-		url: `/${tableName}/get`,
-		method: `GET`,
-		timeout: 1500,
-		statusCode: 200,
-		response: ({ query }) => {
-			const nowItem = tableData.find((l) => l.id === query.id);
-			if (nowItem) {
-				return renderSuccess(nowItem);
-			} else {
-				return renderError(`未找到相关信息`);
-			}
-		},
-	},
 	// 分页
 	{
 		url: `/${tableName}/page`,
@@ -67,8 +52,21 @@ export default [
 		timeout: 1500,
 		statusCode: 201,
 		response: ({ body }) => {
-			console.log(body);
-			return renderSuccess({a:6});
+			const { userName, passWord } = body;
+			const isUserName = tableData.some((l) => l.userName === userName);
+			if (isUserName) {
+				const userInfo = tableData.find((l) => l.userName === userName && l.passWord === passWord);
+				if (userInfo) {
+					return renderSuccess({
+						...userInfo,
+						token: new Date().getTime(),
+					});
+				} else {
+					return renderError('账户或密码错误,请重新输入');
+				}
+			} else {
+				return renderError('当前用户不存在');
+			}
 		},
 	},
 ];

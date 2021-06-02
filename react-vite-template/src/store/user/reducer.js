@@ -6,26 +6,42 @@
  * @LastEditTime: 2021-04-08 15:23:07
  * @FilePath: \react-vite2-template\src\store\global\state.js
  */
-import { setToken, getToken } from '@utils';
-import { httpLogin } from '@http';
+import { isTokenEffective, removeToken, getToken } from '@utils';
+import { _USER_STORAGE } from '@constant';
 // 登录
-export async function login({ username, password }) {
-	const res =await httpLogin({ username, password });
-	console.log(res)
-	// setToken({ username, password });
-	// return {
-	// 	isLogin: true,
-	// };
-}
-// 获取用户信息
-export async function getUserInfo() {
-	await new Promise((res, rej) => {
-		setTimeout(() => {
-			res(true);
-		}, 1000);
-	});
+export function login(ply) {
 	return {
-		info: { ...getToken(true) },
-		initStatus: true,
+		isLogin: true,
+		token: ply.token || '',
+		roles: ply.roles,
+		auths: ply.auths,
+		info: ply,
 	};
+}
+
+// 重置
+export function resetStatus() {
+	return {
+		token: '',
+		isLogin: false,
+		info: {},
+		roles: [],
+		auths: [],
+	};
+}
+
+// 初始化
+export function init() {
+	const info = localStorage.getItem(_USER_STORAGE) || null;
+	const isToken = isTokenEffective();
+	if (isToken) {
+		return {
+			info: info ? JSON.parse(info) : {},
+			token: getToken(),
+			isLogin: true,
+		};
+	} else {
+		removeToken();
+		localStorage.removeItem(_USER_STORAGE);
+	}
 }

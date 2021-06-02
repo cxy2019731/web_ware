@@ -17,6 +17,8 @@ export const _LOGIN = `/login`;
 export const _TOKEN = `authorization`;
 // token 失效时间
 export const _TOKEN_TIME = 24*60*60;
+// 用户信息本地存储key
+export const _USER_STORAGE = `user_storage_info`;
 
 /**
  *=============================================concent模块变量=============================================

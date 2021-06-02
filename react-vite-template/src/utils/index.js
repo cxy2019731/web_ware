@@ -8,16 +8,12 @@
  */
 import { _TOKEN, _TOKEN_TIME } from '@constant';
 // 获取token
-export function getToken(_break = false) {
-	const token = localStorage.getItem(_TOKEN);
-	if (!token) {
-		return '';
-	}
-	return _break ? JSON.parse(token.split('___')[0]) : token;
+export function getToken() {
+	return localStorage.getItem(_TOKEN) || null;
 }
 // 设置token
 export function setToken(token) {
-	localStorage.setItem(_TOKEN, typeof token === 'string' ? token : JSON.stringify(token) + `___${new Date().getTime()}`);
+	localStorage.setItem(_TOKEN, typeof token === 'object' ? JSON.stringify(token) : token);
 	return true;
 }
 // 删除token
@@ -29,9 +25,9 @@ export function removeToken() {
 export function isTokenEffective() {
 	const token = getToken();
 	if (token) {
-		const oldTime = +token.split(`___`)[1];
+		const oldTime = Number(token);
 		const nowTime = new Date().getTime();
-		return (nowTime - oldTime) / 1000 <= _TOKEN_TIME;
+		return !(nowTime - oldTime) / 1000 <= _TOKEN_TIME;
 	}
 	return false;
 }
