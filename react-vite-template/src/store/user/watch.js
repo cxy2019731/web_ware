@@ -15,9 +15,6 @@ export const w_all = defWatch(
 		if (n.token) {
 			setToken(n.token);
 		}
-		if (n.info.id) {
-			localStorage.setItem(_USER_STORAGE, JSON.stringify(n.info));
-		}
 	},
 	['isLogin', 'info'],
 );

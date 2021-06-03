@@ -5,7 +5,7 @@ const createViteAlias = () => {
 		// 请求封装
 		{ find: '@request', replacement: '/src/service/request.js' },
 		// 接口封装-文件夹
-		{ find: '@http', replacement: '/src/service/http' },
+		{ find: '@http', replacement: '/src/service/apis.js' },
 		// 方法封装
 		{ find: '@utils', replacement: '/src/utils/index.js' },
 		// 全局常量
@@ -17,9 +17,9 @@ const createViteAlias = () => {
 		// concent 获取全部模块状态state
 		{ find: '@getAllModuleState', replacement: '/src/base/cc_state.js' },
 		// 组件导出
-		{ find: '@components', replacement: '/src/components' },
+		{ find: '@components', replacement: '/src/components/index.js' },
 		// 国际化函数
-		{ find: '@fr', replacement: '/src/base/i18n_fr.js' }
+		{ find: '@fr', replacement: '/src/base/i18n_fr.js' },
 	];
 
 	return config;

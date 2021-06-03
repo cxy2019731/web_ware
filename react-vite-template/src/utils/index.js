@@ -25,9 +25,10 @@ export function removeToken() {
 export function isTokenEffective() {
 	const token = getToken();
 	if (token) {
-		const oldTime = Number(token);
+		const tokens = token.split('-');
+		const oldTime = Number(tokens[1]);
 		const nowTime = new Date().getTime();
-		return !(nowTime - oldTime) / 1000 <= _TOKEN_TIME;
+		return !(nowTime - oldTime) <= Number(tokens[2]);
 	}
 	return false;
 }
@@ -35,3 +36,11 @@ export function isTokenEffective() {
 export function delay(ms = 1000) {
 	return new Promise((res, rej) => setTimeout(() => res(true), ms));
 }
+/**
+ * 随机16进制颜色 randomHexColorCode
+ * 方法二
+ */
+export const randomHexColorCode = () => {
+	let n = (Math.random() * 0xfffff * 1000000).toString(16);
+	return '#' + n.slice(0, 6);
+};

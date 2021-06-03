@@ -2,5 +2,12 @@ import './init';
 import { render } from 'react-dom';
 import Router from './router/index';
 import '@/styles/index.less';
+import zhCN from 'antd/lib/locale/zh_CN';
+import { ConfigProvider } from 'antd';
 
-render(<Router />, document.getElementById('root'));
+render(
+	<ConfigProvider locale={zhCN}>
+		<Router />
+	</ConfigProvider>,
+	document.getElementById('root'),
+);

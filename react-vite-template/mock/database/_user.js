@@ -4,25 +4,28 @@ const tableName = `user`;
 
 const tableData = [
 	{
-		id:'66666666666666666',
+		id: '66666666666666666',
 		userName: `admin`,
 		passWord: `admin`,
-		userNick: `超管`,
+		nickName: `超管`,
 		roles: ['superAdministrator'],
 		auths: [],
 		email: 'itmanyong@gmail.com',
 		note: '超级管理员账号,无所不能',
 		enable: true,
 		department: '',
+		avatar: 'https://placeimg.com/640/480/any',
+		token: `666666666666666666666666666666`,
 	},
 ];
 // generateArr(15, {
 // 	userName: `@string(6,18)`,
 // 	passWord: `@string(6,18)`,
-// 	userNick: `@cname(2,6)`,
+// 	nickName: `@cname(2,6)`,
 // 	enable: false,
 // 	department: '',
 // 	auths: [],
+//  avatar:'',
 // 	email: '@email',
 // 	'roles|1-2': ['ordinary', 'test'],
 // 	'note|0-50': '@word',
@@ -45,6 +48,30 @@ export default [
 			});
 		},
 	},
+	// 获取
+	{
+		url: `/${tableName}/get`,
+		method: `GET`,
+		timeout: 1500,
+		statusCode: 200,
+		response: ({ query, headers }) => {
+			const { authorization } = headers;
+			const { id } = query;
+			if (id) {
+				const info = tableData.find((l) => l.id === id);
+				if (info) {
+					return renderSuccess(nowItem);
+				}
+			} else if (authorization) {
+				const authorizations = authorization.split('-');
+				const info = tableData.find((l) => l.token === authorizations[0]);
+				if (info) {
+					return renderSuccess(info);
+				}
+			}
+			return renderError('用户不存在');
+		},
+	},
 	// 登录
 	{
 		url: `/${tableName}/login`,
@@ -57,10 +84,7 @@ export default [
 			if (isUserName) {
 				const userInfo = tableData.find((l) => l.userName === userName && l.passWord === passWord);
 				if (userInfo) {
-					return renderSuccess({
-						...userInfo,
-						token: new Date().getTime(),
-					});
+					return renderSuccess(`${userInfo.token}-${new Date().getTime()}-${1000 * 60 * 60 * 0.5}`);
 				} else {
 					return renderError('账户或密码错误,请重新输入');
 				}
@@ -68,5 +92,13 @@ export default [
 				return renderError('当前用户不存在');
 			}
 		},
+	},
+	// 退出
+	{
+		url: `/${tableName}/logout`,
+		method: `POST`,
+		timeout: 1500,
+		statusCode: 201,
+		response: () => renderSuccess(true),
 	},
 ];

@@ -7,7 +7,10 @@
  * @FilePath: \react-vite2-template\src\store\global\state.js
  */
 const state = {
+	// 名称
 	title: `VITE WEB SITE`,
+	// logo
+	logo: 'https://placeimg.com/640/480/any',
 	// 版本
 	version: `0.0.01`,
 	// 路由菜单-根据用户获取下来的

@@ -6,16 +6,8 @@
  */
 import { bg_png } from '@/static/index.js';
 import css from './index.module.less';
-function setup(ctx) {
-	const { setState: set } = ctx;
-	ctx.initState({});
-	const st = {};
-	return st;
-}
 
-function WavesBall(props) {
-	const {} = useConcent({ setup, props });
-
+export default (props) =>{
 	return (
 		<div className={css.wavesBall}>
 			<img src={bg_png} className={css.bgImg} />
@@ -23,4 +15,3 @@ function WavesBall(props) {
 	);
 }
 
-export default WavesBall;

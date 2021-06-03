@@ -9,16 +9,24 @@
 import { isTokenEffective, removeToken, getToken } from '@utils';
 import { _USER_STORAGE } from '@constant';
 // 登录
-export function login(ply) {
+export function login(token) {
 	return {
 		isLogin: true,
-		token: ply.token || '',
-		roles: ply.roles,
-		auths: ply.auths,
-		info: ply,
+		token: token,
 	};
 }
-
+// 用户信息
+export function setUserInfo(info, ms) {
+	return {
+		info: {
+			...ms.info,
+			...info,
+		},
+		roles: info.roles || [],
+		// 用户权限
+		auths: info.auths || [],
+	};
+}
 // 重置
 export function resetStatus() {
 	return {
@@ -32,16 +40,6 @@ export function resetStatus() {
 
 // 初始化
 export function init() {
-	const info = localStorage.getItem(_USER_STORAGE) || null;
-	const isToken = isTokenEffective();
-	if (isToken) {
-		return {
-			info: info ? JSON.parse(info) : {},
-			token: getToken(),
-			isLogin: true,
-		};
-	} else {
-		removeToken();
-		localStorage.removeItem(_USER_STORAGE);
-	}
+	const isLogin = isTokenEffective();
+	return { isLogin: isLogin ? true : false };
 }
