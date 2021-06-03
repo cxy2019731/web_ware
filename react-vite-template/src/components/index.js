@@ -4,5 +4,7 @@ export { default as Language } from './Language/index';
 export { default as Authorize } from './Authorized/index';
 // 登录背景
 export { default as WavesBall } from './WavesBall/index';
-// antd 自定义modal
+// antd modal封装
 export {default as AntdModal} from './AntdModal/index';
+// 开幕动画效果
+export {default as Curtain} from './Curtain/index';

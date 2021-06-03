@@ -37,22 +37,32 @@
 	color: @primary;
 	margin-left: 10px;
 }
-.user,.exit{
+.user,
+.exit {
 	margin-right: 20px;
 }
 .user {
-    display: flex;
-    align-items: center;
-    &>span{
-        margin-left: 5px;
-        color: @primary;
-    }
+	display: flex;
+	align-items: center;
+	& > span {
+		margin-left: 5px;
+		color: @primary;
+	}
 }
-.exit{
-    cursor: pointer;
-    color: rgba(255, 0, 0, 0.445);
-    font-size: 18px;
-    &:hover{
-        color: red;
-    }
+.exit {
+	cursor: pointer;
+	color: rgba(255, 0, 0, 0.445);
+	font-size: 18px;
+	&:hover {
+		color: red;
+	}
+}
+
+.content {
+	border: 1px solid red;
+	width: 100%;
+	height: calc(100vh - 50px);
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }

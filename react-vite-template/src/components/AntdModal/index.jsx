@@ -27,7 +27,7 @@ export default memo((props) => {
 		closable = true,
 		centered = true,
 		destroyOnClose = true,
-		wrapClassName = {},
+		wrapClassName = '',
 		title = '模态框',
 		afterClose,
 		bodyStyle,
@@ -120,32 +120,43 @@ export default memo((props) => {
 		onCancel,
 		onOk,
 	]);
+	// 是否可拖动
+	const _isDarg = useMemo(() => {
+		return isDrag && state.isDarg && !state.isFull;
+	}, [isDrag, state.isDarg, state.isFull]);
 
 	return (
 		<Modal
 			{...modalProps}
 			visible={visible}
 			closable={false}
-			wrapClassName={`${wrapClassName} ${css.modal}`}
+			wrapClassName={`${wrapClassName} ${css.modal} ${state.isFull ? css.modal_full : ''}`}
 			title={
-				<div className={css.title}>
-					<div className={css.left} onMouseOver={() => st.change_isDarg(false)} onMouseOut={() => st.change_isDarg(true)}>
+				<>
+					<div
+						className={classnames({
+							[css.title_left]: true,
+							[css.title_left_isDarg]: !state.isFull,
+							[css.title_left_full]:state.isFull
+						})}
+						onMouseOver={() => st.change_isDarg(false)}
+						onMouseOut={() => st.change_isDarg(true)}>
 						{title}
 					</div>
-					<div className={css.right}>
+					<div className={css.title_right}>
 						{/* 全屏 */}
-						<div className={css.full} onClick={st.onFull}>
+						<div className={css.title_full} onClick={st.onFull}>
 							{isFull ? !state.isFull ? <FullscreenOutlined /> : <FullscreenExitOutlined /> : null}
 						</div>
 						{/* 关闭 */}
-						<div className={css.exit} onClick={onCancel}>
+						<div className={css.title_exit} onClick={onCancel}>
 							{closable ? closeIcon ? closeIcon : <CloseOutlined /> : null}
 						</div>
 					</div>
-				</div>
+				</>
 			}
 			modalRender={(modal) => (
-				<Draggable disabled={isDrag && state.isDarg} bounds={state.bounds} onStart={onDargStart}>
+				<Draggable disabled={_isDarg} bounds={state.bounds} onStart={onDargStart}>
 					<div ref={draggleRef}>{modal}</div>
 				</Draggable>
 			)}>

@@ -5,7 +5,7 @@ import { Form, Input, Button, Checkbox, Row, Col } from 'antd';
 import { UserOutlined, LockOutlined, QuestionCircleOutlined, UserAddOutlined } from '@ant-design/icons';
 import { useI18nKeyToText, MODEL_NAME } from 'cxy-react-i18n';
 import { httpLogin } from '@http';
-import {WavesBall,Language,AntdModal} from '@components';
+import { WavesBall, Language } from '@components';
 import css from './login.module.less';
 
 const layout = {
@@ -104,7 +104,6 @@ function LoginView() {
 			</div>
 			{/* 背景 */}
 			<WavesBall />
-			<AntdModal visible={true} />
 		</>
 	);
 }
