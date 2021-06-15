@@ -63,11 +63,10 @@ function OpenMenu(props) {
 
 	const renderMenuItem = (list) =>
 		list.map((item, index) => {
-			// 是否有子集
 			const isChild = item.children && item.children.length;
 
-			// 是否展开
 			const isOpen = isChild ? openMenuKeys.includes(item.id) : false;
+
 			return (
 				<li className={css.menu_item} key={item.id}>
 					{isChild ? (
